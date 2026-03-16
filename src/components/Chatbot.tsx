@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MessageSquare, X, Send, Bot, User } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -14,7 +16,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! 👋 Welcome to Marcopolo Cafe. How can I help you today?',
+      text: 'Hello! I am your AI concierge for Marcopolo Cafe. How may I assist you today?',
       sender: 'bot',
       timestamp: new Date(),
     },
@@ -36,7 +38,6 @@ export default function Chatbot() {
 
     if (!inputValue.trim()) return;
 
-    // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       text: inputValue,
@@ -63,7 +64,6 @@ export default function Chatbot() {
 
       const data = await response.json();
 
-      // Add bot message
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: data.message,
@@ -76,7 +76,7 @@ export default function Chatbot() {
       console.error('Error:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I'm sorry, I couldn't process your request. Please try again or call us at +91 9876543210.",
+        text: "I apologize, but I am currently unable to process your request. Please try again later or call us directly.",
         sender: 'bot',
         timestamp: new Date(),
       };
@@ -87,97 +87,126 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
-      {/* Chat Widget */}
-      {isOpen ? (
-        <div className="bg-white rounded-lg shadow-2xl flex flex-col w-96 max-h-96 border border-gray-200">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
-            <div>
-              <h3 className="font-bold text-lg">Marcopolo Cafe</h3>
-              <p className="text-xs text-amber-100">Always happy to help!</p>
-            </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-white hover:text-amber-200 transition"
-            >
-              ✕
-            </button>
-          </div>
-
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`mb-3 flex ${
-                  message.sender === 'user' ? 'justify-end' : 'justify-start'
-                }`}
-              >
-                <div
-                  className={`max-w-xs px-4 py-2 rounded-lg ${
-                    message.sender === 'user'
-                      ? 'bg-amber-600 text-white rounded-br-none'
-                      : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'
-                  }`}
-                >
-                  <p className="text-sm">{message.text}</p>
-                  <span className="text-xs opacity-70 mt-1 block">
-                    {message.timestamp.toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </span>
-                </div>
-              </div>
-            ))}
-            {isLoading && (
-              <div className="flex justify-start mb-3">
-                <div className="bg-white text-gray-800 border border-gray-200 px-4 py-2 rounded-lg rounded-bl-none">
-                  <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input */}
-          <form
-            onSubmit={handleSendMessage}
-            className="border-t border-gray-200 p-4 bg-white rounded-b-lg"
+    <div className="fixed bottom-6 right-6 z-50">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9, transition: { duration: 0.2 } }}
+            className="absolute bottom-20 right-0 bg-white rounded-2xl shadow-2xl flex flex-col w-[350px] sm:w-[400px] h-[550px] border border-black/5 overflow-hidden"
           >
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask about our menu..."
-                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-600"
-                disabled={isLoading}
-              />
+            {/* Header */}
+            <div className="bg-primary-900 text-white px-6 py-5 flex justify-between items-center relative overflow-hidden">
+               {/* Decorative grain */}
+              <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+              
+              <div className="flex items-center gap-3 relative z-10">
+                <div className="w-10 h-10 rounded-full glass border-white/20 flex items-center justify-center">
+                  <Bot size={20} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-lg leading-none mb-1">Marcopolo AI</h3>
+                  <p className="text-xs text-primary-200">Online & ready to help</p>
+                </div>
+              </div>
               <button
-                type="submit"
-                disabled={isLoading || !inputValue.trim()}
-                className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition disabled:opacity-50"
+                onClick={() => setIsOpen(false)}
+                className="text-white/70 hover:text-white transition-colors relative z-10"
               >
-                ➤
+                <X size={20} />
               </button>
             </div>
-          </form>
-        </div>
-      ) : (
-        /* Chat Bubble Button */
-        <button
-          onClick={() => setIsOpen(true)}
-          className="bg-gradient-to-r from-amber-600 to-amber-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-xl transition hover:scale-110"
-        >
-          💬
-        </button>
-      )}
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-5 bg-surface-50">
+              <div className="space-y-4">
+                {messages.map((message) => (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    key={message.id}
+                    className={`flex ${
+                      message.sender === 'user' ? 'justify-end' : 'justify-start'
+                    }`}
+                  >
+                    <div className={`flex gap-3 max-w-[85%] ${message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                        message.sender === 'user' ? 'bg-primary-100 text-primary-800' : 'bg-primary-900 text-white'
+                      }`}>
+                        {message.sender === 'user' ? <User size={14} /> : <Bot size={14} />}
+                      </div>
+                      <div
+                        className={`px-4 py-3 rounded-2xl ${
+                          message.sender === 'user'
+                            ? 'bg-primary-600 text-white rounded-tr-sm'
+                            : 'bg-white text-foreground shadow-sm border border-black/5 rounded-tl-sm'
+                        }`}
+                      >
+                        <p className="text-sm leading-relaxed">{message.text}</p>
+                        <span className={`text-[10px] mt-2 block ${message.sender === 'user' ? 'text-primary-200' : 'text-foreground/40'}`}>
+                          {message.timestamp.toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+                {isLoading && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
+                    <div className="flex gap-3 max-w-[85%] flex-row">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-primary-900 text-white">
+                        <Bot size={14} />
+                      </div>
+                      <div className="bg-white text-foreground shadow-sm border border-black/5 px-5 py-4 rounded-2xl rounded-tl-sm flex gap-1.5 items-center h-[46px]">
+                        <motion.div className="w-1.5 h-1.5 bg-primary-400 rounded-full" animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 1, delay: 0 }} />
+                        <motion.div className="w-1.5 h-1.5 bg-primary-400 rounded-full" animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} />
+                        <motion.div className="w-1.5 h-1.5 bg-primary-400 rounded-full" animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+            </div>
+
+            {/* Input */}
+            <form
+              onSubmit={handleSendMessage}
+              className="border-t border-black/5 p-4 bg-white"
+            >
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Type a message..."
+                  className="w-full bg-surface-100 border-none rounded-full pl-5 pr-12 py-3.5 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:bg-white transition-all text-sm"
+                  disabled={isLoading}
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading || !inputValue.trim()}
+                  className="absolute right-2 p-2 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition disabled:opacity-50 disabled:hover:bg-primary-600 shadow-sm"
+                >
+                  <Send size={16} className={inputValue.trim() ? "translate-x-0.5 -translate-y-0.5" : ""} />
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => setIsOpen(!isOpen)}
+        className="bg-primary-900 text-white rounded-2xl p-4 shadow-xl hover:shadow-2xl transition-all border border-white/10"
+      >
+        {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
+      </motion.button>
     </div>
   );
 }

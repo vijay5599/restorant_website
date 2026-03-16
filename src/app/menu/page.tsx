@@ -2,99 +2,142 @@
 
 import Navbar from '@/components/Navbar';
 import Chatbot from '@/components/Chatbot';
+import { motion } from 'framer-motion';
+import { Coffee, ChevronRight } from 'lucide-react';
 
 export default function MenuPage() {
   const menuCategories = [
     {
-      name: 'Pizzas',
+      name: 'Artisanal Pizzas',
+      icon: '🍕',
       items: [
-        { name: 'Veg Pizza', price: '₹250', description: 'Fresh vegetables with mozzarella cheese' },
-        { name: 'Chicken Pizza', price: '₹300', description: 'Crispy chicken with special sauce' },
+        { name: 'Margherita Classico', price: '₹250', description: 'San Marzano tomato sauce, fresh buffalo mozzarella, and sweet basil leaves.' },
+        { name: 'Truffle Mushroom', price: '₹350', description: 'White base with roasted wild mushrooms, truffle oil, and parmesan shavings.' },
+        { name: 'Spicy Pepperoni', price: '₹380', description: 'Crispy pepperoni, hot honey drizzle, chili flakes, and aged mozzarella.' },
+        { name: 'Burrata & Prosciutto', price: '₹420', description: 'Fresh creamy burrata, thinly sliced prosciutto, and arugula.' },
       ],
     },
     {
-      name: 'Snacks',
+      name: 'Gourmet Snacks',
+      icon: '🍟',
       items: [
-        { name: 'French Fries', price: '₹120', description: 'Golden crispy fries with salt' },
-        { name: 'Veg Burger', price: '₹180', description: 'Fresh vegetable burger with mayo' },
+        { name: 'Truffle Parmesan Fries', price: '₹180', description: 'Hand-cut crispy fries tossed in truffle oil and dusted with parmesan.' },
+        { name: 'Wagyu Beef Slider', price: '₹280', description: 'Juicy mini patty, caramelized onions, gruyere cheese, brioche bun.' },
+        { name: 'Crispy Calamari', price: '₹240', description: 'Lightly dusted calamari rings served with lemon garlic aioli.' },
+        { name: 'Avocado Toast', price: '₹210', description: 'Smashed avocado, cherry tomatoes, feta cheese, and microgreens on sourdough.' },
       ],
     },
     {
-      name: 'Drinks',
+      name: 'Specialty Drinks',
+      icon: '☕',
       items: [
-        { name: 'Cold Coffee', price: '₹150', description: 'Chilled coffee with ice cream' },
-        { name: 'Cappuccino', price: '₹120', description: 'Creamy cappuccino with rich foam' },
+        { name: 'Signature Cold Brew', price: '₹180', description: '18-hour steeped cold brew served over a large craft ice cube.' },
+        { name: 'Vanilla Bean Latte', price: '₹160', description: 'Double espresso, steamed milk, and real Madagascar vanilla bean.' },
+        { name: 'Matcha Lemonade', price: '₹170', description: 'Ceremonial grade matcha lightly sweetened and combined with fresh lemonade.' },
+        { name: 'Artisan Hot Chocolate', price: '₹190', description: 'Rich Colombian cocoa melted into steamed whole milk with toasted marshmallow.' },
       ],
     },
   ];
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-background text-foreground">
       <Navbar />
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-amber-900 to-amber-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Full Menu</h1>
-          <p className="text-lg text-amber-100">
-            Explore all our delicious offerings
-          </p>
+      <div className="relative pt-32 pb-20 overflow-hidden bg-primary-900 border-b border-white/10">
+        <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1495474472207-464a8d4ee7a4?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary-900 to-transparent" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ duration: 0.6 }}
+          >
+            <span className="text-primary-400 font-semibold tracking-wider uppercase text-sm mb-3 block">Discover Our Offerings</span>
+            <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6">
+              Our Full Menu
+            </h1>
+            <p className="text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
+               Expertly crafted beverages and gourmet dishes designed to delight your senses.
+            </p>
+          </motion.div>
         </div>
       </div>
 
       {/* Menu Content */}
-      <div className="bg-gray-50 py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="bg-surface-50 py-24 relative">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-100/50 rounded-full mix-blend-multiply opacity-50 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-200/40 rounded-full mix-blend-multiply opacity-50 blur-3xl pointer-events-none" />
+        
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {menuCategories.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="mb-16">
-              <h2 className="text-3xl font-bold mb-8 text-gray-900 border-b-4 border-amber-600 pb-4">
-                {category.name}
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+              key={categoryIndex} 
+              className="mb-24 last:mb-0"
+            >
+              <div className="flex items-center gap-4 mb-10 border-b border-black/10 pb-6">
+                <div className="text-4xl">{category.icon}</div>
+                <h2 className="text-4xl font-serif font-bold text-foreground">
+                  {category.name}
+                </h2>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
                 {category.items.map((item, itemIndex) => (
                   <div
                     key={itemIndex}
-                    className="bg-white rounded-lg shadow-md p-8 hover:shadow-xl transition"
+                    className="group"
                   >
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h3 className="text-2xl font-bold text-gray-900">{item.name}</h3>
-                        <p className="text-gray-600 mt-2">{item.description}</p>
-                      </div>
-                      <span className="text-3xl font-bold text-amber-600">
-                        {item.price}
-                      </span>
+                    <div className="flex justify-between items-baseline mb-2">
+                       <h3 className="text-xl font-bold text-foreground group-hover:text-primary-800 transition-colors">{item.name}</h3>
+                       <div className="flex-1 mx-4 border-b border-dashed border-black/20 relative top-[-6px]"></div>
+                       <span className="text-xl font-serif font-bold text-primary-800">
+                         {item.price}
+                       </span>
                     </div>
+                    <p className="text-foreground/70 leading-relaxed text-sm pr-10">
+                      {item.description}
+                    </p>
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
       {/* CTA Section */}
-      <div className="bg-amber-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-4">Want to Book a Table?</h2>
-          <p className="text-lg mb-8 text-amber-100">
-            Have any questions? Chat with our AI assistant or call us!
+      <div className="bg-surface-950 text-white py-24 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-8">
+             <Coffee size={32} className="text-primary-400" />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">Ready to Experience Marcopolo?</h2>
+          <p className="text-xl text-white/70 mb-10 leading-relaxed max-w-2xl mx-auto">
+            Reserve your table in advance and ensure the perfect spot for your next amazing coffee experience.
           </p>
-          <a
-            href="tel:+919876543210"
-            className="bg-amber-100 text-amber-900 px-8 py-3 rounded-lg font-bold hover:bg-amber-200 transition inline-block"
-          >
-            Call Us: +91 9876543210
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+             <a
+               href="/contact"
+               className="inline-flex justify-center items-center gap-2 bg-primary-600 text-white px-8 py-4 rounded-full font-medium hover:bg-primary-700 hover:scale-105 transition-all w-full sm:w-auto"
+             >
+               Book Now
+               <ChevronRight size={18} />
+             </a>
+             <a
+               href="tel:+919876543210"
+               className="inline-flex justify-center items-center px-8 py-4 rounded-full font-medium text-white border border-white/20 hover:bg-white/5 transition-all w-full sm:w-auto"
+             >
+               Call: +91 9876543210
+             </a>
+          </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="bg-gray-950 text-gray-400 py-8 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-          <p>&copy; 2024 Marcopolo Cafe. All rights reserved.</p>
-        </div>
-      </footer>
 
       <Chatbot />
     </main>

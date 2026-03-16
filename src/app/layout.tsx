@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Merriweather } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
+  weight: ["300", "400", "700", "900"],
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Marcopolo Cafe - Best Cafe & Fast Food in Koramangala, Bangalore",
-  description: "Marcopolo Cafe offers delicious pizzas, snacks, and coffee in Koramangala, Bangalore. Open 9 AM to 11 PM. Book a table or order online!",
-  keywords: "cafe, restaurant, Koramangala, Bangalore, pizza, coffee, fast food",
+  title: "Marcopolo Cafe - Premium Coffee & Dining in Koramangala",
+  description: "Experience the finest coffee and exquisite menu at Marcopolo Cafe in Koramangala, Bangalore. Open 9 AM to 11 PM. Reserve your table today.",
+  keywords: "cafe, premium restaurant, Koramangala, Bangalore, artisanal coffee, fine dining",
 };
 
 export default function RootLayout({
@@ -24,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${merriweather.variable} antialiased`}
       >
         {children}
       </body>
