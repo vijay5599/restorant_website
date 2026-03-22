@@ -5,7 +5,7 @@ import { client } from '@/sanity/lib/client';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
-const resend = new Resend(RESEND_API_KEY);
+const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 const RESTAURANT_SYSTEM_PROMPT = `You are a helpful customer service representative for Marcopolo Cafe in Koramangala, Bangalore. You represent the cafe with professionalism and warmth.
 
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
         const args = JSON.parse(toolCall.function.arguments);
 
         // Send email via Resend
-        if (RESEND_API_KEY) {
+        if (RESEND_API_KEY && resend) {
           try {
             await resend.emails.send({
               from: 'Booking Bot <onboarding@resend.dev>',
@@ -121,6 +121,9 @@ export async function POST(request: NextRequest) {
             console.error("Resend Error", e);
             return NextResponse.json({ message: "I'm sorry, I couldn't process the booking right now. Please call us at +91 9876543210." }, { status: 200 });
           }
+        } else {
+           console.error("Resend API Key or client missing during booking attempt.");
+           return NextResponse.json({ message: "I'm sorry, table booking is temporarily unavailable. Please call us directly!" }, { status: 200 });
         }
       }
     }
