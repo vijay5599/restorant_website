@@ -15,7 +15,11 @@ import { client } from '@/sanity/lib/client';
 export const revalidate = 60; // Revalidate every 60 seconds
 
 export default async function Home() {
-  const sanityItems = await client.fetch(`*[_type == "menuItem"]{name, price, icon, desc, "category": category->title} | order(category->order asc, name asc)`);
+  const sanityItems = client
+    ? await client.fetch(
+        `*[_type == "menuItem"]{name, price, icon, desc, "category": category->title} | order(category->order asc, name asc)`
+      )
+    : [];
 
   return (
     <main className="min-h-screen bg-background text-foreground">
