@@ -5,12 +5,13 @@ import { siteConfig } from '@/config';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
-export function MenuVariantC() {
+export function MenuVariantC({ menuItems }: { menuItems?: any[] }) {
   const { menuOverview } = siteConfig;
+  const items = menuItems && menuItems.length > 0 ? menuItems : menuOverview.items;
 
   // We split the items to highlight the first two items
-  const highlightedItems = menuOverview.items.slice(0, 2);
-  const otherItems = menuOverview.items.slice(2, 6);
+  const highlightedItems = items.slice(0, 2);
+  const otherItems = items.slice(2, 6);
 
   return (
     <div className="bg-white py-24">

@@ -5,8 +5,9 @@ import { siteConfig } from '@/config';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
-export function MenuVariantA() {
+export function MenuVariantA({ menuItems }: { menuItems?: any[] }) {
   const { menuOverview } = siteConfig;
+  const items = menuItems && menuItems.length > 0 ? menuItems : menuOverview.items;
 
   const container = {
     hidden: { opacity: 0 },
@@ -43,7 +44,7 @@ export function MenuVariantA() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
         >
-          {menuOverview.items.map((item, index) => (
+          {items.map((item, index) => (
             <motion.div
               key={index}
               variants={itemAnim}

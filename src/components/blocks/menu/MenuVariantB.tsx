@@ -4,8 +4,9 @@ import { motion } from 'framer-motion';
 import { siteConfig } from '@/config';
 import Link from 'next/link';
 
-export function MenuVariantB() {
+export function MenuVariantB({ menuItems }: { menuItems?: any[] }) {
   const { menuOverview } = siteConfig;
+  const items = menuItems && menuItems.length > 0 ? menuItems : menuOverview.items;
 
   return (
     <div className="bg-[#FAF9F6] py-24 relative">
@@ -27,7 +28,7 @@ export function MenuVariantB() {
                 {category}
               </h3>
               <div className="space-y-8">
-                {menuOverview.items
+                {items
                   .filter((item) => item.category === category)
                   .map((item, index) => (
                   <motion.div

@@ -1,5 +1,3 @@
-'use client';
-
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import MenuSection from '@/components/MenuSection';
@@ -12,8 +10,13 @@ import { MenuVariantA } from '@/components/blocks/menu/MenuVariantA';
 import { HeroVariantB } from '@/components/blocks/hero/HeroVariantB';
 import { MenuVariantB } from '@/components/blocks/menu/MenuVariantB';
 import { MenuVariantC } from '@/components/blocks/menu/MenuVariantC';
+import { client } from '@/sanity/lib/client';
 
-export default function Home() {
+export const revalidate = 60; // Revalidate every 60 seconds
+
+export default async function Home() {
+  const sanityItems = await client.fetch(`*[_type == "menuItem"]{name, price, icon, desc, "category": category->title} | order(category->order asc, name asc)`);
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
@@ -74,7 +77,7 @@ export default function Home() {
       </div>
 
       {/* Menu Section */}
-      <MenuVariantA />
+      <MenuVariantA menuItems={sanityItems} />
 
       {/* Reviews Section */}
       <ReviewsSection />
