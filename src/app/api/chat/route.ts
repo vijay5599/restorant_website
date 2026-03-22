@@ -38,9 +38,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'OpenAI API key is not configured' }, { status: 500 });
     }
 
-    // Fetch live menu from Sanity
-    const sanityItems = await client.fetch(`*[_type == "menuItem"]{name, price, "category": category->title}`);
-    const menuContext = `LIVE MENU INVENTORY:\n${JSON.stringify(sanityItems, null, 2)}`;
+    // Fetch live menu from Sanity (with safety check)
+    let sanityItems = [];
+    let menuContext = "";
+    
+    if (client) {
+      try {
+        sanityItems = await client.fetch(`*[_type == "menuItem"]{name, price, "category": category->title}`);
+        menuContext = `LIVE MENU INVENTORY:\n${JSON.stringify(sanityItems, null, 2)}`;
+      } catch (e) {
+        console.error("Sanity Fetch Error:", e);
+      }
+    } else {
+      console.warn("Sanity client not initialized. Skipping live menu fetch.");
+    }
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
