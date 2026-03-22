@@ -5,7 +5,16 @@ import { siteConfig } from '@/config';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
-export function MenuVariantA({ menuItems }: { menuItems?: any[] }) {
+interface MenuItem {
+  name: string;
+  price: string;
+  icon?: string;
+  imageUrl?: string; // Added this line
+  desc?: string;
+  category?: string;
+}
+
+export function MenuVariantA({ menuItems }: { menuItems?: MenuItem[] }) {
   const { menuOverview } = siteConfig;
   const items = menuItems && menuItems.length > 0 ? menuItems : menuOverview.items;
 
@@ -62,8 +71,18 @@ export function MenuVariantA({ menuItems }: { menuItems?: any[] }) {
                     {item.category}
                   </span>
                 </div>
-                <div className="w-12 h-12 bg-[#2a2a2a] rounded-full flex items-center justify-center text-xl shadow-inner border border-[#353534]">
-                   {item.icon}
+                <div className="w-16 h-16 rounded-2xl overflow-hidden bg-[#2a2a2a] flex items-center justify-center shrink-0 border border-[#353534] group-hover:border-[#cfc4c0]/50 transition-colors shadow-sm">
+                  {item.imageUrl ? (
+                    <img 
+                      src={item.imageUrl} 
+                      alt={item.name} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  ) : (
+                    <span className="text-3xl filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                       {item.icon || '🍽️'}
+                    </span>
+                  )}
                 </div>
               </div>
               

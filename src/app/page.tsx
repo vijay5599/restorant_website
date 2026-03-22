@@ -17,7 +17,7 @@ export const revalidate = 60; // Revalidate every 60 seconds
 export default async function Home() {
   const sanityItems = client
     ? await client.fetch(
-        `*[_type == "menuItem"]{name, price, icon, desc, "category": category->title} | order(category->order asc, name asc)`
+        `*[_type == "menuItem"]{name, price, imageUrl, desc, "category": category->title} | order(category->order asc, name asc)`
       )
     : [];
 

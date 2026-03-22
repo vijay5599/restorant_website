@@ -43,12 +43,12 @@ export const siteConfig = {
     heading: "A Taste of Perfection",
     description: "Carefully curated ingredients, expertly crafted to bring you the finest cafe experience in the city.",
     items: [
-      { name: 'Artisan Veg Pizza', price: '₹250', category: 'Pizzas', icon: '🍕', desc: 'Hand-tossed base, fresh basil, heirloom tomatoes, and mozzarella.' },
-      { name: 'Truffle Chicken Pizza', price: '₹350', category: 'Pizzas', icon: '🍗', desc: 'Smoked chicken, truffle oil, woodland mushrooms, and parmesan.' },
-      { name: 'Truffle Parmesan Fries', price: '₹180', category: 'Snacks', icon: '🍟', desc: 'Crispy cut fries tossed in truffle oil and aged parmesan dust.' },
-      { name: 'Gourmet Veg Slider', price: '₹220', category: 'Snacks', icon: '🍔', desc: 'Brioche bun, grilled portobello, caramelized onions, vegan aioli.' },
-      { name: 'Signature Cold Brew', price: '₹180', category: 'Drinks', icon: '🧊', desc: 'Slow-steeped for 18 hours, served over craft ice with a splash of cream.' },
-      { name: 'Classic Cappuccino', price: '₹160', category: 'Drinks', icon: '☕', desc: 'Double shot espresso, velvety microfoam, dusted with rich cocoa.' },
+      { name: 'Artisan Veg Pizza', price: '₹250', category: 'Pizzas', icon: '🍕', imageUrl: '', desc: 'Hand-tossed base, fresh basil, heirloom tomatoes, and mozzarella.' },
+      { name: 'Truffle Chicken Pizza', price: '₹350', category: 'Pizzas', icon: '🍗', imageUrl: '', desc: 'Smoked chicken, truffle oil, woodland mushrooms, and parmesan.' },
+      { name: 'Truffle Parmesan Fries', price: '₹180', category: 'Snacks', icon: '🍟', imageUrl: '', desc: 'Crispy cut fries tossed in truffle oil and aged parmesan dust.' },
+      { name: 'Gourmet Veg Slider', price: '₹220', category: 'Snacks', icon: '🍔', imageUrl: '', desc: 'Brioche bun, grilled portobello, caramelized onions, vegan aioli.' },
+      { name: 'Signature Cold Brew', price: '₹180', category: 'Drinks', icon: '🧊', imageUrl: '', desc: 'Slow-steeped for 18 hours, served over craft ice with a splash of cream.' },
+      { name: 'Classic Cappuccino', price: '₹160', category: 'Drinks', icon: '☕', imageUrl: '', desc: 'Double shot espresso, velvety microfoam, dusted with rich cocoa.' },
     ]
   }
 };

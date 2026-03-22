@@ -26,10 +26,10 @@ export const menuItemType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'icon',
-      title: 'Emoji Icon',
-      type: 'string',
-      description: 'e.g., 🍕, 🍟',
+      name: 'imageUrl',
+      title: 'Item Image URL',
+      type: 'url',
+      description: 'Public URL to an image (e.g., from Unsplash)',
     }),
     defineField({
       name: 'desc',
@@ -49,13 +49,13 @@ export const menuItemType = defineType({
     select: {
       title: 'name',
       subtitle: 'price',
-      icon: 'icon',
+      imageUrl: 'imageUrl',
     },
-    prepare({ title, subtitle, icon }) {
+    prepare({ title, subtitle, imageUrl }) {
       return {
         title,
         subtitle,
-        media: () => icon || '🍽️',
+        media: () => imageUrl ? '🖼️' : '🍽️',
       }
     }
   },
